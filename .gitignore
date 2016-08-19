@@ -1,0 +1,6 @@
+# Maven generated artifacts
+/target/
+
+# IDEA settings
+/*.iml
+/.idea

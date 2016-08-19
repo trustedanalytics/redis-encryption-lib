@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.trustedanalytics</groupId>
+    <artifactId>redis-encryption-lib</artifactId>
+    <version>0.4.0</version>
+
+    <parent>
+        <groupId>org.trustedanalytics</groupId>
+        <artifactId>trustedanalytics-cloud-parent</artifactId>
+        <version>0.6.3</version>
+    </parent>
+
+    <dependencies>
+
+        <!-- for redis comunication -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-redis</artifactId>
+        </dependency>
+
+        <!-- for ObjectMapper -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+
+        <!-- test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- utils -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <properties>
+        <jacoco-measurement-instructions>0.7000</jacoco-measurement-instructions>
+        <jacoco-measurement-branches>0.5000</jacoco-measurement-branches>
+        <jacoco-measurement-lines>0.7500</jacoco-measurement-lines>
+        <jacoco-measurement-classes>0.8500</jacoco-measurement-classes>
+    </properties>
+</project>
