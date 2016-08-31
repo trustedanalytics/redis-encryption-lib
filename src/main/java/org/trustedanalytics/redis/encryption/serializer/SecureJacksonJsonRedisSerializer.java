@@ -16,9 +16,9 @@
 
 package org.trustedanalytics.redis.encryption.serializer;
 
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 import org.trustedanalytics.redis.encryption.EncryptionException;
 import org.trustedanalytics.redis.encryption.EncryptionService;
@@ -27,7 +27,7 @@ import org.trustedanalytics.redis.encryption.SecureJson;
 import java.io.IOException;
 
 
-public class SecureJacksonJsonRedisSerializer<T> extends JacksonJsonRedisSerializer<T> {
+public class SecureJacksonJsonRedisSerializer<T> extends Jackson2JsonRedisSerializer<T> {
 
   private EncryptionService encryptionService;
 

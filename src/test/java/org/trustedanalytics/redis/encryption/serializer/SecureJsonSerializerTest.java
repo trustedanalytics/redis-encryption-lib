@@ -23,7 +23,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 import org.trustedanalytics.redis.encryption.SampleStructure;
 import org.trustedanalytics.redis.encryption.EncryptionException;
@@ -47,7 +47,7 @@ public class SecureJsonSerializerTest {
   private static final String SERIALIZED_JSON = "{\"iv\":\"QP9tPqOSAnCqDOecoyInWg==\"," +
           "\"value\":\"s3pBJG3V691KZStwF4931Xqf+V51FALZkOSYcyWLwHEgxyCcs4SotfFp5qfIQnXgZUnViLJ8NlGrZkpkz1Li5A==\"}";
   private static final SampleStructure SAMPLE_STRUCTURE = new SampleStructure("email@example.com", "code");
-  private static final byte[] PLAIN_SECURITY_CODE = new JacksonJsonRedisSerializer<SampleStructure>(SampleStructure.class).serialize(SAMPLE_STRUCTURE);
+  private static final byte[] PLAIN_SECURITY_CODE = new Jackson2JsonRedisSerializer<SampleStructure>(SampleStructure.class).serialize(SAMPLE_STRUCTURE);
 
   @Rule
   public ExpectedException thrown = ExpectedException.none();
