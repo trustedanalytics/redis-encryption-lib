@@ -33,6 +33,7 @@ import static org.mockito.Mockito.doAnswer;
 public class HashServiceTest {
 
   private static final String SALT = "Randomly_Ganareted_32-DigitsSalt";
+  private static final String ProperHashResult = "jVxfRzp42MAbwvZj3nyMkZKPXriLhRh2uH7lMvxsmbw=";
 
   private HashService hashService;
 
@@ -43,10 +44,20 @@ public class HashServiceTest {
 
   @Test
   public void shouldHash() {
+      String userMail = "email@example.com";
+
+      String sut = hashService.hash(userMail);
+
+      Assert.assertEquals(ProperHashResult, sut);
+  }
+  @Test
+  public void shouldHashSameResultForSameInput() {
     String userMail = "email@example.com";
 
-    String sut = hashService.hash(userMail);
+    String sut_first = hashService.hash(userMail);
+    String sut_second = hashService.hash(userMail);
 
-    Assert.assertEquals("jVxfRzp42MAbwvZj3nyMkZKPXriLhRh2uH7lMvxsmbw=",sut);
+    Assert.assertEquals(ProperHashResult,sut_first);
+    Assert.assertEquals(ProperHashResult,sut_second);
   }
 }
