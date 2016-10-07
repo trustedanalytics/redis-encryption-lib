@@ -34,16 +34,15 @@ public class HashService {
     Preconditions.checkNotNull(salt);
     Preconditions.checkArgument(salt.length() == 32, "Hash salt should be 256-bit long");
     this.salt = salt;
-
-    try {
-      sha = MessageDigest.getInstance("SHA-256");
-
-    } catch (NoSuchAlgorithmException e) {
-      throw new RuntimeEncryptionException("Unable to create encryption service", e);
-    }
   }
 
   public String hash(String toHash) {
+    try {
+      sha = MessageDigest.getInstance("SHA-256");
+    } catch (NoSuchAlgorithmException e) {
+      throw new RuntimeEncryptionException("Unable to create encryption service", e);
+    }
+
     byte[] hashedBytes = sha.digest((salt+toHash).getBytes());
     return new String(Base64.getEncoder().encode(hashedBytes));
   }
