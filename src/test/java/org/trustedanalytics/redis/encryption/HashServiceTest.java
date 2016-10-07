@@ -26,6 +26,7 @@ import org.mockito.stubbing.Answer;
 
 import java.security.SecureRandom;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doAnswer;
 
@@ -44,11 +45,11 @@ public class HashServiceTest {
 
   @Test
   public void shouldHash() {
-      String userMail = "email@example.com";
+    String userMail = "email@example.com";
 
-      String sut = hashService.hash(userMail);
+    String sut = hashService.hash(userMail);
 
-      Assert.assertEquals(ProperHashResult, sut);
+    assertEquals(ProperHashResult, sut);
   }
   @Test
   public void shouldHashSameResultForSameInput() {
@@ -57,7 +58,7 @@ public class HashServiceTest {
     String sut_first = hashService.hash(userMail);
     String sut_second = hashService.hash(userMail);
 
-    Assert.assertEquals(ProperHashResult,sut_first);
-    Assert.assertEquals(ProperHashResult,sut_second);
+    assertEquals(ProperHashResult,sut_first);
+    assertEquals(ProperHashResult,sut_second);
   }
 }
