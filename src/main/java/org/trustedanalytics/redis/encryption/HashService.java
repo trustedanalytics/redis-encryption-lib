@@ -18,8 +18,11 @@ package org.trustedanalytics.redis.encryption;
 
 import com.google.common.base.Preconditions;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Base64;
 
 
@@ -41,7 +44,7 @@ public class HashService {
   }
 
   public String hash(String toHash) {
-    sha.update(salt.getBytes());
-    return new String(Base64.getEncoder().encode(sha.digest(toHash.getBytes())));
+    byte[] hashedBytes = sha.digest((salt+toHash).getBytes());
+    return new String(Base64.getEncoder().encode(hashedBytes));
   }
 }
