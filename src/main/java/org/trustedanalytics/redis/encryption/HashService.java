@@ -18,11 +18,8 @@ package org.trustedanalytics.redis.encryption;
 
 import com.google.common.base.Preconditions;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.Base64;
 
 
