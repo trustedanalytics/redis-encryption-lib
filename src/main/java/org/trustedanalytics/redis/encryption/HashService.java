@@ -25,21 +25,22 @@ import java.util.Base64;
 
 public class HashService {
   private MessageDigest sha;
+  private String salt;
 
   public HashService(String salt) {
     Preconditions.checkNotNull(salt);
     Preconditions.checkArgument(salt.length() == 32, "Hash salt should be 256-bit long");
-
-    try {
-      sha = MessageDigest.getInstance("SHA-256");
-      sha.update(salt.getBytes());
-
-    } catch (NoSuchAlgorithmException e) {
-      throw new RuntimeEncryptionException("Unable to create encryption service", e);
-    }
+    this.salt = salt;
   }
 
   public String hash(String toHash) {
-    return new String(Base64.getEncoder().encode(sha.digest(toHash.getBytes())));
+    try {
+      sha = MessageDigest.getInstance("SHA-256");
+    } catch (NoSuchAlgorithmException e) {
+      throw new RuntimeEncryptionException("Unable to create encryption service", e);
+    }
+
+    byte[] hashedBytes = sha.digest((salt+toHash).getBytes());
+    return new String(Base64.getEncoder().encode(hashedBytes));
   }
 }
