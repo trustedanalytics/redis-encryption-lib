@@ -17,18 +17,16 @@
 package org.trustedanalytics.redis.encryption;
 
 import com.google.common.base.Preconditions;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.GCMParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 public class EncryptionService {
   private SecretKeySpec key;
@@ -48,7 +46,7 @@ public class EncryptionService {
 
   public SecureJson encrypt(byte[] toEncrypt) throws EncryptionException {
     try {
-      Cipher encryptionCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+      Cipher encryptionCipher = getCipherInstance();
 
       encryptionCipher.init(Cipher.ENCRYPT_MODE, key, secureRandom);
       byte[] ivBytes = encryptionCipher.getIV();
@@ -67,9 +65,9 @@ public class EncryptionService {
 
   public byte[] decrypt(SecureJson toDecrypt) throws EncryptionException {
     try {
-      Cipher decryptionCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+      Cipher decryptionCipher = getCipherInstance();
 
-      IvParameterSpec iv = new IvParameterSpec(toDecrypt.getIv());
+      GCMParameterSpec iv = new GCMParameterSpec(128, toDecrypt.getIv());
       decryptionCipher.init(Cipher.DECRYPT_MODE, key, iv);
 
       return decryptionCipher.doFinal(toDecrypt.getValue());
@@ -82,5 +80,9 @@ public class EncryptionService {
             BadPaddingException e) {
       throw new EncryptionException("Unable to decrypt message", e);
     }
+  }
+
+  private Cipher getCipherInstance() throws NoSuchPaddingException, NoSuchAlgorithmException {
+    return Cipher.getInstance("AES/GCM/NoPadding");
   }
 }

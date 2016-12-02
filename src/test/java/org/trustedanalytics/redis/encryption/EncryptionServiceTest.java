@@ -15,6 +15,10 @@
  */
 package org.trustedanalytics.redis.encryption;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doAnswer;
+
+import java.security.SecureRandom;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,19 +28,14 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
-import java.security.SecureRandom;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doAnswer;
-
 @RunWith(MockitoJUnitRunner.class)
 public class EncryptionServiceTest {
 
   private static final String CIPHER = "16-DigitsCipherK";
 
-  private static final String ORGINAL = "{\"iv\":\"ab==\",\"value\":\"def=\"}";
-  private static final byte[] IV = new byte[]{64, -1, 109, 62, -93, -110, 2, 112, -86, 12, -25, -100, -93, 34, 39, 90};
-  private static final byte[] ENCRYPTED = new byte[]{-91, -6, 17, -61, -36, -3, 7, -106, -66, -12, 87, 62, 102, -109, -9, -112, 125, -120, 107, -53, 11, 42, 100, 36, -54, 43, 38, 60, -69, -94, 37, -74};
+  private static final String ORIGINAL = "{\"iv\":\"ab==\",\"value\":\"def=\"}";
+  private static final byte[] IV = new byte[]{64, -1, 109, 62, -93, -110, 2, 112, -86, 12, -25, -100};
+  private static final byte[] ENCRYPTED = new byte[]{-83, 71, -116, 115, 105, -76, -102, -36, 50, 121, -79, 18, 45, -28, 55, -70, 78, -40, -105, -40, 46, 31, 18, -82, 82, -47, 66, 70, 50, -27, 9, 38, 102, -103, 70, -27, 5, 119, -42, -27, -28, -50, 4, 125};
   private static final SecureJson SECURE_JSON = new SecureJson(IV, ENCRYPTED);
 
   private EncryptionService encryptionService;
@@ -60,7 +59,7 @@ public class EncryptionServiceTest {
       }
     }).when(secureRandom).nextBytes(any(byte[].class));
 
-    SecureJson sut = encryptionService.encrypt(ORGINAL.getBytes());
+    SecureJson sut = encryptionService.encrypt(ORIGINAL.getBytes());
 
     Assert.assertEquals(SECURE_JSON, sut);
   }
@@ -69,7 +68,7 @@ public class EncryptionServiceTest {
   public void shouldDecrypt() throws EncryptionException {
     byte[] sut = encryptionService.decrypt(SECURE_JSON);
 
-    Assert.assertEquals(ORGINAL, new String(sut));
+    Assert.assertEquals(ORIGINAL, new String(sut));
   }
 
   @Test(expected = EncryptionException.class)
